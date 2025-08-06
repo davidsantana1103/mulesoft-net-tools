@@ -230,4 +230,29 @@ NetworkUtils::traceRoute(attributes.queryParams.host)]]></ee:set-payload>
             </ee:message>
         </ee:transform>
     </flow>
+	<flow name="post:\curl:net-tools-config" doc:id="5296ba58-a8d1-4ae8-a82a-07e6ab34ccaf" >
+		<ee:transform doc:name="Transform Message" doc:id="c64cfc55-c6e5-4dc8-abf8-abba0bbf45ad" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+import java!com::mulesoft::tool::network::NetworkUtils
+var headersArray = if (payload.headers? and (payload.headers is Array)) 
+                      payload.headers map ((h) -> h as String) 
+                   else 
+                      []
+---
+NetworkUtils::curl(
+  payload.url,
+  payload.method,
+  headersArray,
+  payload.payload,
+  payload.insecure default false,
+  payload.timeout default 0,
+  payload.followRedirects default true,
+  payload.basicAuth default null,
+  payload.proxy default null
+)]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
 </mule>
