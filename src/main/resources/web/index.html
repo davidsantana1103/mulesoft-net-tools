@@ -322,11 +322,19 @@
                     }
                     
                     if (operation === 'curl-full') {
+                        let payloadText = $("#payload").val();
+                        let payload;
+                        try {
+                            payload = payloadText ? JSON.parse(payloadText) : null;
+                        } catch (e) {
+                            toastr["error"]("Invalid JSON in payload", "Invalid Arguments");
+                            return;
+                        }
                         var postData = {
                             url: $("#url").val(),
                             method: $("#method").val(),
                             headers: $("#headers").val().split('\n').filter(h => h.trim().length > 0),
-                            payload: $("#payload").val(),
+                            payload: payload,
                             insecure: $("#insecure").prop('checked'),
                             timeout: parseInt($("#timeout").val()) || 0,
                             followRedirects: $("#followRedirects").prop('checked'),
@@ -336,7 +344,7 @@
                         // Remove empty fields
                         Object.keys(postData).forEach(k => {
                             if (postData[k] === "" || postData[k] === null || (Array.isArray(postData[k]) && postData[k].length === 0)) {
-                            delete postData[k];
+                                delete postData[k];
                             }
                         });
                         $("#check").attr("disabled", true);

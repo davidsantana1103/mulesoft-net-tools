@@ -127,9 +127,9 @@ securitySchemes:
             required: false
           payload:
             description: Request body content (ignored for GET requests)
-            type: string
+            type: any
             required: false
-            example: '{"name":"John","email":"john@example.com"}'
+            example: {"name":"John","email":"john@example.com"}
           insecure:
             description: Skip SSL certificate validation
             type: boolean
