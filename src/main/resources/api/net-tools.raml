@@ -173,6 +173,36 @@ securitySchemes:
                 "email": "john@example.com",
                 "created_at": "2023-06-12T15:30:22Z"
               }
+/database:
+  post:
+    description: Executes a SQL query against a database
+    body:
+      application/json:
+        type: object
+        properties:
+          url:
+            description: The JDBC URL of the database
+            type: string
+            required: true
+          sql:
+            description: The SQL query to execute
+            type: string
+            required: true
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "column1": "value1",
+                  "column2": "value2"
+                },
+                {
+                  "column1": "value3",
+                  "column2": "value4"
+                }
+              ]
     
 
 /ciphertest:

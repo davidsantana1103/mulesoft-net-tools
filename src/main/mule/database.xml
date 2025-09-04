@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+    xmlns:db="http://www.mulesoft.org/schema/mule/db"
+    xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+    xmlns="http://www.mulesoft.org/schema/mule/core"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+    http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+    http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+
+    <flow name="post-database-select" doc:id="f8b4c8e9-3b7e-4b1d-8b0a-6e9e8c6a3e7d">
+        <db:select doc:name="Select" doc:id="a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d" config-ref="Database_Config">
+            <db:sql>#[payload.sql]</db:sql>
+        </db:select>
+        <ee:transform doc:name="Transform Message" doc:id="b1c2d3e4-f5a6-4b7c-8d9e-0f1a2b3c4d5e">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+        <error-handler>
+            <on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5f">
+                <ee:transform doc:name="Transform Message" doc:id="b1c2d3e4-f5a6-4b7c-8d9e-0f1a2b3c4d5f">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+    error: error.description
+}]]></ee:set-payload>
+                    </ee:message>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+</mule>

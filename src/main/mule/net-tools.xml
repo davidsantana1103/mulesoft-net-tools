@@ -176,7 +176,7 @@ output application/json
 output application/java
 import java!com::mulesoft::tool::network::NetworkUtils
 ---
-NetworkUtils::curl(attributes.queryParams.url, attributes.queryParams.*header default [], attributes.queryParams.insecure as Boolean)]]></ee:set-payload>
+NetworkUtils::curl(attributes.queryParams.url, attributes.queryParams.*header default [], (attributes.queryParams.insecure default false) as Boolean)]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
     </flow>
@@ -277,5 +277,8 @@ NetworkUtils::curl(
 )]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+	</flow>
+	<flow name="post:\database:net-tools-config" doc:id="fef1816f-3cf6-445d-a529-2e55ff6bad50" >
+		<flow-ref doc:name="post-database-select" doc:id="2630e257-626b-4fea-a8c9-f4659737fe59" name="post-database-select"/>
 	</flow>
 </mule>
