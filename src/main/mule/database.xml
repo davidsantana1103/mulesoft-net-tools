@@ -44,7 +44,7 @@ output application/java
 payload]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<db:stored-procedure doc:name="Stored procedure" doc:id="b7512b6d-3536-4889-ad48-af6bd557592c" config-ref="Database_Config" inOutParameters="#[payload.inOutParameters]" outputParameters="#[payload.outputParameters]">
+		<db:stored-procedure doc:name="Stored procedure" doc:id="b7512b6d-3536-4889-ad48-af6bd557592c" config-ref="Database_Config" inOutParameters="#[payload.inOutParameters]" outputParameters="#[payload.outputParameters]" parameterTypes="#[payload.paramTypes]">
 			<db:sql ><![CDATA[#[payload.sql]]]></db:sql>
 			<db:input-parameters ><![CDATA[#[payload.inputParameters]]]></db:input-parameters>
 		</db:stored-procedure>

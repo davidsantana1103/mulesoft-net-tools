@@ -166,6 +166,10 @@
                   <label for="inputParameters">Input Parameters (JSON format):</label><br>
                   <textarea name="inputParameters" placeholder='{ "param1": "value1" }' title="Input Parameters" id="inputParameters" rows="3" cols="50"></textarea>
                 </div>
+                <div id="paramTypesDiv" style="display:none; margin-top:10px;">
+                  <label for="paramTypes">Input Parameter Types (JSON format):</label><br>
+                  <textarea name="paramTypes" placeholder='{ "param1": "VARCHAR" }' title="Parameter Types" id="paramTypes" rows="3" cols="50"></textarea>
+                </div>
                 <div id="inOutParametersDiv" style="display:none; margin-top:10px;">
                   <label for="inOutParameters">InOut Parameters (JSON format):</label><br>
                   <textarea name="inOutParameters" placeholder='{ "param2": "value2" }' title="InOut Parameters" id="inOutParameters" rows="3" cols="50"></textarea>
@@ -248,7 +252,7 @@
                     textareas.hide();
                     var helps = $(".helpBox");
                     helps.hide();
-                    $("#methodDiv, #payloadDiv, #timeoutDiv, #followRedirectsDiv, #jdbcurlDiv, #sqlDiv, #inputParametersDiv, #inOutParametersDiv, #outputParametersDiv").hide();
+                    $("#methodDiv, #payloadDiv, #timeoutDiv, #followRedirectsDiv, #jdbcurlDiv, #sqlDiv, #inputParametersDiv, #inOutParametersDiv, #outputParametersDiv, #paramTypesDiv").hide();
                     switch (operation) {
                       case "ping":
                         $("#ip").show();
@@ -316,6 +320,8 @@
                         $("#inOutParameters").show();
                         $("#outputParametersDiv").show();
                         $("#outputParameters").show();
+                        $("#paramTypesDiv").show();
+                        $("#paramTypes").show();
                         break;
                     default:
 
@@ -345,7 +351,8 @@
                             sql: sql,
                             inputParameters: $("#inputParameters").val() ? JSON.parse($("#inputParameters").val()) : {},
                             inOutParameters: $("#inOutParameters").val() ? JSON.parse($("#inOutParameters").val()) : {},
-                            outputParameters: $("#outputParameters").val() ? JSON.parse($("#outputParameters").val()) : []
+                            outputParameters: $("#outputParameters").val() ? JSON.parse($("#outputParameters").val()) : [],
+                            paramTypes: $("#paramTypes").val() ? JSON.parse($("#paramTypes").val()) : {}
                         };
                         $("#check").attr("disabled", true);
                         $("#output").append('<pre class="command">&gt; database-sp ' + jdbcurl + '</pre>');
