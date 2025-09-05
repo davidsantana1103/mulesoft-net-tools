@@ -278,7 +278,10 @@ NetworkUtils::curl(
 			</ee:message>
 		</ee:transform>
 	</flow>
-	<flow name="post:\database:net-tools-config" doc:id="fef1816f-3cf6-445d-a529-2e55ff6bad50" >
-		<flow-ref doc:name="post-database-select" doc:id="2630e257-626b-4fea-a8c9-f4659737fe59" name="post-database-select"/>
+	<flow name="post:\database\select:application\json:net-tools-config" doc:id="fef1816f-3cf6-445d-a529-2e55ff6bad50" >
+		<flow-ref doc:name="process-database-select" doc:id="2630e257-626b-4fea-a8c9-f4659737fe59" name="process-database-select"/>
+	</flow>
+	<flow name="post:\database\sp:application\json:net-tools-config" doc:id="193060d4-68e5-407d-b0d4-b9e11d60fccc" >
+		<flow-ref doc:name="process-database-sp" doc:id="b7512b6d-3536-4889-ad48-af6bd557592c" name="process-database-sp"/>
 	</flow>
 </mule>

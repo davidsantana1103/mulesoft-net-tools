@@ -173,7 +173,7 @@ securitySchemes:
                 "email": "john@example.com",
                 "created_at": "2023-06-12T15:30:22Z"
               }
-/database:
+/database/select:
   post:
     description: Executes a SQL query against a database
     body:
@@ -203,6 +203,53 @@ securitySchemes:
                   "column2": "value4"
                 }
               ]
+/database/sp:
+  post:
+    description: Executes a stored procedure against a database
+    body:
+      application/json:
+        type: object
+        properties:
+          url:
+            description: The JDBC URL of the database
+            type: string
+            required: true
+          sql:
+            description: The SQL query to execute
+            type: string
+            required: true
+          inputParameters:
+            description: The input parameters for the stored procedure
+            type: object
+            required: false
+          inOutParameters:
+            description: The in-out parameters for the stored procedure
+            type: object
+            required: false
+          outputParameters:
+            description: The output parameters for the stored procedure
+            type: array
+            required: false
+            items:
+              type: object
+              properties:
+                key:
+                  type: string
+                'type':
+                  type: string
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "output": {
+                  "param3": 123
+                },
+                "updatedInOutParameters": {
+                  "param2": "new_value"
+                }
+              }
     
 
 /ciphertest:

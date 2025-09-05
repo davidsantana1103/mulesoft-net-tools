@@ -8,7 +8,7 @@
     http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
     http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 
-    <flow name="post-database-select" doc:id="f8b4c8e9-3b7e-4b1d-8b0a-6e9e8c6a3e7d">
+    <flow name="process-database-select" doc:id="f8b4c8e9-3b7e-4b1d-8b0a-6e9e8c6a3e7d">
         <db:select doc:name="Select" doc:id="a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d" config-ref="Database_Config">
             <db:sql>#[payload.sql]</db:sql>
         </db:select>
@@ -21,7 +21,7 @@ payload]]></ee:set-payload>
             </ee:message>
         </ee:transform>
         <error-handler>
-            <on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5f">
+            <on-error-propagate enableNotifications="false" logException="false" doc:name="On Error Propagate" doc:id="a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5f">
                 <ee:transform doc:name="Transform Message" doc:id="b1c2d3e4-f5a6-4b7c-8d9e-0f1a2b3c4d5f">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
@@ -35,4 +35,32 @@ output application/json
             </on-error-propagate>
         </error-handler>
     </flow>
+	<flow name="process-database-sp" doc:id="193060d4-68e5-407d-b0d4-b9e11d60fccc" >
+		<db:stored-procedure doc:name="Stored procedure" doc:id="b7512b6d-3536-4889-ad48-af6bd557592c" config-ref="Database_Config" inOutParameters="#[payload.inOutParameters]" outputParameters="#[payload.outputParameters]">
+			<db:sql ><![CDATA[#[payload.sql]]]></db:sql>
+			<db:input-parameters ><![CDATA[#[payload.inputParameters]]]></db:input-parameters>
+		</db:stored-procedure>
+		<ee:transform doc:name="Transform Message" doc:id="66e41641-05a5-49a9-ad72-740f0fe3f7e1" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<error-handler >
+			<on-error-propagate enableNotifications="false" logException="false" doc:name="On Error Propagate" doc:id="f62adb6b-f37a-4425-8754-b4ee7edf5715" >
+				<ee:transform doc:name="Transform Message" doc:id="fd10b2d4-08a0-4b9f-af60-6841adb29372" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+    error: error.description
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-propagate>
+		</error-handler>
+	</flow>
 </mule>
