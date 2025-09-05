@@ -22,7 +22,7 @@ payload]]></ee:set-payload>
         </ee:transform>
         <error-handler>
             <on-error-propagate enableNotifications="false" logException="false" doc:name="On Error Propagate" doc:id="a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5f">
-                <ee:transform doc:name="Transform Message" doc:id="b1c2d3e4-f5a6-4b7c-8d9e-0f1a2b3c4d5f">
+                <ee:transform doc:name="set error description as response" doc:id="b1c2d3e4-f5a6-4b7c-8d9e-0f1a2b3c4d5f">
                     <ee:message>
                         <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -36,11 +36,19 @@ output application/json
         </error-handler>
     </flow>
 	<flow name="process-database-sp" doc:id="193060d4-68e5-407d-b0d4-b9e11d60fccc" >
+		<ee:transform doc:name="set java format" doc:id="154582df-2037-42e7-a0f8-ebebc1f17d77" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
 		<db:stored-procedure doc:name="Stored procedure" doc:id="b7512b6d-3536-4889-ad48-af6bd557592c" config-ref="Database_Config" inOutParameters="#[payload.inOutParameters]" outputParameters="#[payload.outputParameters]">
 			<db:sql ><![CDATA[#[payload.sql]]]></db:sql>
 			<db:input-parameters ><![CDATA[#[payload.inputParameters]]]></db:input-parameters>
 		</db:stored-procedure>
-		<ee:transform doc:name="Transform Message" doc:id="66e41641-05a5-49a9-ad72-740f0fe3f7e1" >
+		<ee:transform doc:name="set json format" doc:id="66e41641-05a5-49a9-ad72-740f0fe3f7e1" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
@@ -50,7 +58,7 @@ payload]]></ee:set-payload>
 		</ee:transform>
 		<error-handler >
 			<on-error-propagate enableNotifications="false" logException="false" doc:name="On Error Propagate" doc:id="f62adb6b-f37a-4425-8754-b4ee7edf5715" >
-				<ee:transform doc:name="Transform Message" doc:id="fd10b2d4-08a0-4b9f-af60-6841adb29372" >
+				<ee:transform doc:name="set error description as response" doc:id="fd10b2d4-08a0-4b9f-af60-6841adb29372" >
 					<ee:message >
 						<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
