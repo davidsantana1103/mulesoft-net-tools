@@ -51,6 +51,10 @@
 							<groupId>com.microsoft.sqlserver</groupId>
 							<artifactId>mssql-jdbc</artifactId>
 						</sharedLibrary>
+						<sharedLibrary>
+							<groupId>com.microsoft.azure</groupId>
+							<artifactId>msal4j</artifactId>
+						</sharedLibrary>
 					</sharedLibraries>
 					<classifier>mule-application</classifier>
 				</configuration>
@@ -112,6 +116,11 @@
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>mssql-jdbc</artifactId>
 			<version>13.2.0.jre11</version>
+		</dependency>
+		<dependency>
+			<groupId>com.microsoft.azure</groupId>
+			<artifactId>msal4j</artifactId>
+			<version>1.11.3</version>
 		</dependency>
 	</dependencies>
 
