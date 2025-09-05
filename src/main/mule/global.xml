@@ -41,8 +41,10 @@ http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/cu
 	<spring:config name="Spring_Config"
 		doc:id="45181472-36fd-44e6-b710-296481c3c450" files="beans.xml" />
 	<spring:security-manager>
-		<spring:delegate-security-provider
+		<spring:delegate-security-providers>
+			<spring:delegate-security-provider
 			name="memory-provider" delegate-ref="authenticationManager" />
+		</spring:delegate-security-providers>
 	</spring:security-manager>
 	<db:config name="Database_Config" doc:name="Database Config" doc:id="c46c351a-02ec-4ece-a632-d064f3c56446" >
 		<db:generic-connection url="#[payload.url]" driverClassName="${jdbc.driver}"/>
