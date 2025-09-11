@@ -284,4 +284,7 @@ NetworkUtils::curl(
 	<flow name="post:\database\sp:application\json:net-tools-config" doc:id="193060d4-68e5-407d-b0d4-b9e11d60fccc" >
 		<flow-ref doc:name="process-database-sp" doc:id="b7512b6d-3536-4889-ad48-af6bd557592c" name="process-database-sp"/>
 	</flow>
+	<flow name="post:\database\script:application\json:net-tools-config" doc:id="a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d">
+		<flow-ref doc:name="process-database-script" doc:id="d1e2f3a4-b5c6-d7e8-f9a0-b1c2d3e4f5a6" name="process-database-script"/>
+	</flow>
 </mule>

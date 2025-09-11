@@ -251,6 +251,29 @@ securitySchemes:
                   "param2": "new_value"
                 }
               }
+/database/script:
+  post:
+    description: Executes a SQL script against a database
+    body:
+      application/json:
+        type: object
+        properties:
+          url:
+            description: The JDBC URL of the database
+            type: string
+            required: true
+          sql:
+            description: The SQL script to execute
+            type: string
+            required: true
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "message": "Script executed successfully"
+              }
     
 
 /ciphertest:

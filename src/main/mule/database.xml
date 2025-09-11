@@ -71,4 +71,31 @@ output application/json
 			</on-error-propagate>
 		</error-handler>
 	</flow>
+    <flow name="process-database-script" doc:id="a8b7c6d5-e4f3-a2b1-c0d9-e8f7a6b5c4d3">
+        <db:execute-script doc:name="Execute script" doc:id="e0aea69d-6607-41d4-9067-a6e2556e2de3" config-ref="Database_Config">
+			<db:sql ><![CDATA[#[payload.sql]]]></db:sql>
+		</db:execute-script>
+		<ee:transform doc:name="Transform Message" doc:id="c1d2e3f4-a5b6-c7d8-e9f0-a1b2c3d4e5f6">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+        <error-handler>
+            <on-error-propagate enableNotifications="false" logException="false" doc:name="On Error Propagate" doc:id="b1c2d3e4-f5a6-b7c8-d9e0-f1a2b3c4d5e6">
+                <ee:transform doc:name="set error description as response" doc:id="a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+    error: error.description
+}]]></ee:set-payload>
+                    </ee:message>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
+    </flow>
 </mule>
